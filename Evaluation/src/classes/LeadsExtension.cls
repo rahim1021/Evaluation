@@ -31,24 +31,21 @@ public class LeadsExtension {
         List<Account> listAccount = [ SELECT id,Name FROM Account WHERE name IN :listStringCompanyName];
         List<Contact> listContact = [ SELECT id,Name,FirstName,LastName FROM Contact WHERE name IN :listStringContactName];
         for(Lead objLead:listSelectedLeadRecords){
+            system.debug(objLead);
             for(Account objAccount:listAccount){
+                
                 if(objLead.Company==objAccount.name)
                 {
                     mapCompanyName.put(objLead.Id, objAccount);
-                    
                 }
-                
             }
             for(Contact objContact:listContact){
                 if(objLead.firstName==objContact.firstName && objLead.lastName==objContact.LastName)
                 {
                     mapContact.put(objLead.Id, objContact);
-                    
                 }
-                
             }
         }
-        
         List<Database.LeadConvert> listLeadConversions = new List<Database.LeadConvert>(); 
         Database.LeadConvert objLeadConvert;
         LeadStatus convertStatus = [SELECT Id, MasterLabel FROM LeadStatus WHERE IsConverted=true LIMIT 1];
@@ -69,7 +66,6 @@ public class LeadsExtension {
             objLeadConvert.setConvertedStatus(convertStatus.MasterLabel);
             listLeadConversions.add(objLeadConvert);
         }     
-        
         // Convert Records
         List<Database.LeadConvertResult> leadConversionResults = Database.convertLead( listLeadConversions ); 
         // Set the Converted Result
