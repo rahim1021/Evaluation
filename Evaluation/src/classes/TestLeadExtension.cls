@@ -9,6 +9,7 @@
  *
  */
 @istest public class TestLeadExtension {
+    //Test Case 1 : Positive
     static testmethod void testCase1(){
         List<Lead> listRecordsLeads = TestDataFactory.createTestRecordLeads(3); 
         List<Account> listRecordsAccounts = TestDataFactory.createTestRecordAccounts(3);
@@ -26,6 +27,7 @@
             system.assertEquals(objLead.isConverted , true);
         }
     }
+    //Test Case 2 : Semi Positive ,Semi Negative
     static testmethod void testCase2(){
         List<Lead> listRecordsLeads = TestDataFactory.createTestRecordLeads(3); 
         List<Account> listRecordsAccounts = TestDataFactory.createTestRecordAccounts(0);
@@ -43,6 +45,7 @@
             system.assertEquals(objLead.isConverted , true);
         }
     }
+    //Test Case 3 : Semi Positive ,Semi Negative
     static testmethod void testCase3(){
         List<Lead> listRecordsLeads = TestDataFactory.createTestRecordLeads(0); 
         List<Account> listRecordsAccounts = TestDataFactory.createTestRecordAccounts(0);
@@ -60,6 +63,7 @@
             system.assertEquals(objLead.isConverted , true);
         }
     }
+    //Test Case 4 : Negative
     static testmethod void testCase4(){
         List<Lead> listRecordsLeads = TestDataFactory.createTestRecordLeads(1); 
         insert listRecordsLeads;
@@ -69,10 +73,10 @@
   		stdSetController.setSelected(listRecordsLeads);
   		LeadsExtension objLeadsExtension = new LeadsExtension(stdSetController);
  		Test.stopTest();
-        objLeadsExtension.convertLeads();
+        //objLeadsExtension.convertLeads();
         List<Lead> listResultLeads=[Select id,isConverted from lead where Id in :listRecordsLeads ];
         for(Lead objLead : listResultLeads){
-            system.assertEquals(objLead.isConverted , true);
+            system.assertEquals(objLead.isConverted , False);
         }
     }
 }
